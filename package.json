@@ -1,0 +1,29 @@
+{
+  "name": "evalscript",
+  "version": "0.3.1",
+  "description": "EvalScript - Replace everything in Javascript with Eval",
+  "main": "index.js",
+  "dependencies": {
+    "jison": "^0.4.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo lol"
+  },
+  "bin": {
+    "evalscript": "./bin/evalscript"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kocisov/evalscript.git"
+  },
+  "keywords": [
+    "Eval"
+  ],
+  "author": "Koci",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kocisov/evalscript/issues"
+  },
+  "homepage": "https://github.com/Kocisov/evalscript#readme"
+}
