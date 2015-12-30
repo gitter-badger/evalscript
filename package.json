@@ -1,6 +1,6 @@
 {
   "name": "evalscript",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "description": "EvalScript - Replace everything in Javascript with Eval",
   "main": "index.js",
   "dependencies": {
@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo lol"
+    "test": "evalscript ./examples/if.es"
   },
   "bin": {
     "evalscript": "./bin/evalscript"
