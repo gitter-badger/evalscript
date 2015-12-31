@@ -13,7 +13,7 @@ Then use it with evalscript command
 
 // file must be **es** extension
 ```
-**evalscript** your-file.**es**
+evalscript your-file.es
 ```
 
 It will produce your-file.js
@@ -49,6 +49,12 @@ eval num 3
 eval dw() {
   eval 3 * num
 }
+```
+
+## alert
+```
+eval "alert message" !
+eval 1337 !
 ```
 
 ## comments

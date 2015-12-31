@@ -13,5 +13,9 @@ var yy = module.exports = {
 
   createFunc: function(name, dothis) {
     return '\nvar ' + name + ' = function() {\n' + dothis + '\n}\n';
+  },
+
+  alertStatement: function(value) {
+    return 'alert(' + value + ');';
   }
 };

@@ -79,6 +79,10 @@ d
   /* math */
   | EVAL m
     { $$ = $2; }
+
+  /* */
+  | EVAL i '!'
+    { $$ = yy.alertStatement($2); }
   ;
 
 i
