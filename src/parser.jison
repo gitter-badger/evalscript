@@ -2,30 +2,33 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+\s+                                   /* skip whitespace */
+"//".*                                /* Ignore */
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* Ignore */
+\n+                                   return 'NEWLINE'
 
-"eval"                                return 'EVAL'
+'eval'                                return 'EVAL'
 
-"{"                                   return "{"
-"}"                                   return "}"
-")"                                   return ")"
-"("                                   return "("
-"="                                   return "="
-"!="                                  return "!="
-"->"                                  return "->"
-"!"                                   return "!"
-"+"                                   return "+"
-"-"                                   return "-"
-"*"                                   return "*"
-"/"                                   return "/"
-"<"                                   return "<"
-">"                                   return ">"
+'{'                                   return '{'
+'}'                                   return '}'
+')'                                   return ')'
+'('                                   return '('
+'='                                   return '='
+'!='                                  return '!='
+'->'                                  return '->'
+'!'                                   return '!'
+'+'                                   return '+'
+'-'                                   return '-'
+'*'                                   return '*'
+'/'                                   return '/'
+'<'                                   return '<'
+'>'                                   return '>'
 
-(['](\\.|[^']|\\\')*?['])+            return "STRING"
-(["](\\.|[^"]|\\\")*?["])+            return "STRING"
+(['](\\.|[^']|\\\')*?['])+            return 'STRING'
+(["](\\.|[^"]|\\\")*?["])+            return 'STRING'
 
-[0-9]+("."[0-9]+)?\b                  return "NUMBER"
-[_a-zA-Z]+[_a-zA-Z0-9]*\b             return "VAR"
+[0-9]+("."[0-9]+)?\b                  return 'NUMBER'
+[_a-zA-Z]+[_a-zA-Z0-9]*\b             return 'VAR'
 
 <<EOF>>                               return 'EOF'
 .                                     return 'INVALID'
@@ -52,12 +55,30 @@ d
   /* console.log */
   : EVAL i
     { $$ = yy.printStatement($2); }
+  | EVAL '{' statements '}'
+    { $$ = yy.printStatement($3); }
 
   /* if */
-  | EVAL '(' p ')' '{' d '}'
+  | EVAL '(' p ')' '{' statements '}'
     { $$ = yy.ifStatement($3, $6); }
-  | EVAL '(' p ')' '{' d '}' EVAL '{' d '}'
-    { $$ = yy.ifStatement($3, $6); }
+
+  /* set var */
+  | EVAL i i
+    { $$ = yy.setVar($2, $3); }
+  | EVAL i '->' d
+    { $$ = yy.setVar($2, $4); }
+
+  /* create function */
+  | EVAL i '(' ')' '{' statements '}'
+    { $$ = yy.createFunc($2, $6); }
+
+  /* pure function call */
+  | EVAL i '(' ')'
+    { $$ = $2 + '();\n'; }
+
+  /* math */
+  | EVAL m
+    { $$ = $2; }
   ;
 
 i
@@ -70,7 +91,9 @@ i
   ;
 
 p
-  : i '!=' i
+  : i '=' i
+    { $$ = $1 + ' === ' + $3; }
+  | i '!=' i
     { $$ = $1 + ' != ' + $2; }
   | '!' i
     { $$ = '!' + $2; }
@@ -78,4 +101,15 @@ p
     { $$ = $1 + ' < ' + $3; }
   | i '>' i
     { $$ = $1 + ' > ' + $3; }
+  ;
+
+m
+  : i '+' i
+    { $$ = $1 + ' + ' + $3; }
+  | i '-' i
+    { $$ = $1 + ' - ' + $3; }
+  | i '*' i
+    { $$ = $1 + ' * ' + $3; }
+  | i '/' i
+    { $$ = $1 + ' / ' + $3; }
   ;

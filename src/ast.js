@@ -1,9 +1,17 @@
 var yy = module.exports = {
   ifStatement: function(first, second) {
-    return '\nif(' + first + ') {' + second + '}\n';
+    return 'if(' + first + ') {\n' + second + '}\n';
   },
 
   printStatement: function(first) {
-    return '\nconsole.log(' + first + ');\n';
+    return 'console.log(' + first + ');';
+  },
+
+  setVar: function(name, value) {
+    return 'var ' + name + ' = ' + value + ';\n';
+  },
+
+  createFunc: function(name, dothis) {
+    return '\nvar ' + name + ' = function() {\n' + dothis + '\n}\n';
   }
 };
