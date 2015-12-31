@@ -1,4 +1,6 @@
 # EvalScript
+
+[![Join the chat at https://gitter.im/Kocisov/evalscript](https://badges.gitter.im/Kocisov/evalscript.svg)](https://gitter.im/Kocisov/evalscript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 **EvalScript** - Replace every thing in Javascript with Eval
 
 Kappa/
